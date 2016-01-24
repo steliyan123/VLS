@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="visual-library-search-ui:war">
+    <output-path>$PROJECT_DIR$/visual-library-search-ui/target</output-path>
+    <root id="archive" name="visual-library-search-ui-1.0-SNAPSHOT.war">
+      <element id="artifact" artifact-name="visual-library-search-ui:war exploded" />
+    </root>
+  </artifact>
+</component>

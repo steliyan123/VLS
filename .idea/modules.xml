@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/VLS.iml" filepath="$PROJECT_DIR$/VLS.iml" />
+      <module fileurl="file://$PROJECT_DIR$/visual-library-search-backend/visual-library-search-backend.iml" filepath="$PROJECT_DIR$/visual-library-search-backend/visual-library-search-backend.iml" />
+      <module fileurl="file://$PROJECT_DIR$/visual-library-search-production/visual-library-search-production.iml" filepath="$PROJECT_DIR$/visual-library-search-production/visual-library-search-production.iml" />
+      <module fileurl="file://$PROJECT_DIR$/visual-library-search-ui/visual-library-search-ui.iml" filepath="$PROJECT_DIR$/visual-library-search-ui/visual-library-search-ui.iml" />
+      <module fileurl="file://$PROJECT_DIR$/visual-library-search-widgetset/visual-library-search-widgetset.iml" filepath="$PROJECT_DIR$/visual-library-search-widgetset/visual-library-search-widgetset.iml" />
+    </modules>
+  </component>
+</project>
