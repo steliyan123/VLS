@@ -12,6 +12,7 @@ import com.vaadin.client.ServerConnector;
 import com.vaadin.client.communication.StateChangeEvent;
 import com.vaadin.client.extensions.AbstractExtensionConnector;
 import com.vaadin.client.ui.VTextField;
+import com.vaadin.event.MouseEvents;
 import com.vaadin.shared.ui.Connect;
 import de.dinkov.vlsapp.samples.ResetButtonForTextField;
 
@@ -23,7 +24,7 @@ import de.dinkov.vlsapp.samples.ResetButtonForTextField;
  */
 @Connect(ResetButtonForTextField.class)
 public class ResetButtonForTextFieldConnector extends
-        AbstractExtensionConnector implements KeyUpHandler, AttachEvent.Handler {
+        AbstractExtensionConnector implements  KeyUpHandler, AttachEvent.Handler {
 
     public static final String CLASSNAME = "resetbuttonfortextfield";
     private VTextField textField;

@@ -1,4 +1,4 @@
-package de.dinkov.vlsapp.samples.backend.Entities;
+package de.dinkov.vlsapp.samples.backend.model;
 
 import java.util.Comparator;
 

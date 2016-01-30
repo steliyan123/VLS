@@ -1,5 +1,5 @@
 Another Sandbox Vaadin Project 
-Created with vaadin maven archetype application-sample 
+Created with Vaadin maven archetype application-sample
 visual-library-search
 ==============
 

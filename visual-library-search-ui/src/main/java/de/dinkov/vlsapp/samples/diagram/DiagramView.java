@@ -21,21 +21,19 @@ import de.dinkov.vlsapp.samples.Diagram;
 
 public class DiagramView extends VerticalLayout implements View {
 
-    /**
-     *
-     */
     private static final long serialVersionUID = 1L;
+
     public static final String VIEW_NAME = "Diagram";
+    private Diagram diagram;
+    private DiagramViewPresenter viewPresenter = new DiagramViewPresenter(this);
 
     public DiagramView() {
-        CustomLayout aboutContent = new CustomLayout("diagramview");
-        aboutContent.setStyleName("diagram-content");
+        CustomLayout diagramContent = new CustomLayout("diagramview");
+        diagramContent.setStyleName("diagram-content");
 
-        // you can add Vaadin components in predefined slots in the custom
-        // layout
-
+        /*******************************************************************/
         LinkedHashMap childrenObj = new LinkedHashMap();
-        childrenObj.put("name", "The Hamburger Postulate");
+        childrenObj.put("name", "The Hamburget Postulate");
         childrenObj.put("type", "document");
         childrenObj.put("nodeId", new Integer(3534));
 
@@ -61,16 +59,14 @@ public class DiagramView extends VerticalLayout implements View {
             e.printStackTrace();
         }
         String jsonText = out.toString();
-
-        Diagram diagram = new Diagram();
-        diagram.addTreeData(jsonText);
-
-        aboutContent.addComponent(diagram, "diagram");
+        /*******************************************************************************/
+        diagram = new Diagram(jsonText);
+        diagramContent.addComponent(diagram, "diagram");
 
         setSizeFull();
         setStyleName("diagram-view");
-        addComponent(aboutContent);
-        setComponentAlignment(aboutContent, Alignment.MIDDLE_CENTER);
+        addComponent(diagramContent);
+        setComponentAlignment(diagramContent, Alignment.MIDDLE_CENTER);
     }
 
     @Override

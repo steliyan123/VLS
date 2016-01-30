@@ -15,6 +15,11 @@
     <dependencies>
         <!-- Versions for these are configured in the parent POM -->
         <dependency>
+            <groupId>org.vaadin.addons</groupId>
+            <artifactId>dragdroplayouts</artifactId>
+            <version>1.1.3</version>
+        </dependency>
+        <dependency>
             <groupId>javax.servlet</groupId>
             <artifactId>javax.servlet-api</artifactId>
             <scope>provided</scope>
@@ -64,6 +69,36 @@
             <groupId>com.googlecode.json-simple</groupId>
             <artifactId>json-simple</artifactId>
             <version>1.1.1</version>
+        </dependency>
+        <dependency>
+            <groupId>org.vaadin.addons</groupId>
+            <artifactId>popupbutton</artifactId>
+            <version>2.5.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.vaadin.addons</groupId>
+            <artifactId>fonticon</artifactId>
+            <version>7.1.1</version>
+        </dependency>
+        <dependency>
+            <groupId>com.zipsoft</groupId>
+            <artifactId>clicklabel</artifactId>
+            <version>1.0.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.vaadin.addons</groupId>
+            <artifactId>sizereporter</artifactId>
+            <version>0.1.4</version>
+        </dependency>
+        <dependency>
+            <groupId>org.vaadin.addons</groupId>
+            <artifactId>restrain</artifactId>
+            <version>0.1</version>
+        </dependency>
+        <dependency>
+            <groupId>org.vaadin.marcus</groupId>
+            <artifactId>mouse-events</artifactId>
+            <version>1.0.0</version>
         </dependency>
 
     </dependencies>

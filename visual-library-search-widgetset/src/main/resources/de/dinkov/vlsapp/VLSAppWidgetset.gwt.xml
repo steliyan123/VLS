@@ -6,4 +6,5 @@
     
     <stylesheet src="resetbuttonfortextfield/styles.css"/>
     <stylesheet src="diagram/diagram.css"/>
+    <set-property name="user.agent" value="gecko1_8"/>
 </module>

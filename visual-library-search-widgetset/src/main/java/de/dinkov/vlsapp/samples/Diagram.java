@@ -2,14 +2,21 @@ package de.dinkov.vlsapp.samples;
 
 import com.vaadin.annotations.JavaScript;
 import com.vaadin.ui.*;
-import de.dinkov.vlsapp.samples.backend.elastic_search.DiagramStrategy;
 import elemental.json.JsonArray;
 
 @JavaScript({ "d3.min.js", "diagram_connector.js", "jquery-1.11.3.min.js" })
 public class Diagram extends AbstractJavaScriptComponent {
+    private String clickedNodeName;
+    private String clickedNodeType;
+    private String clickedNodeId;
 
     public Diagram() {
         // callback that will be called from the client-side
+        addCallBacks();
+    }
+
+    public Diagram(String jsonData) {
+        addTreeData(jsonData);
         addCallBacks();
     }
     public void addCallBacks(){
@@ -19,8 +26,8 @@ public class Diagram extends AbstractJavaScriptComponent {
                 String nodeName = (String) arguments.getString(0);
                 String nodeType = (String) arguments.getString(1);
 
-                DiagramStrategy strategy = new DiagramStrategy(nodeType, nodeName);
-                String result = strategy.applySearchFormStrategySearch().getResult().toString();
+              //  Strategy strategy = new Strategy(nodeType, nodeName);
+              //  ArrayList<Document> result = strategy.applySearchFormStrategySearch().getResult();
 
                 displayPopUp(nodeName, nodeType);
             }

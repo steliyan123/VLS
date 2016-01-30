@@ -430,7 +430,7 @@ window.de_dinkov_vlsapp_samples_Diagram = function() {
             nodeEnter.append("image")
                 .attr('class', 'nodeImage')
                 .attr("xlink:href", function(d) {
-                    return "/web5/APP/PUBLISHED/" + d.type+ ".png"; })
+                    return "/VAADIN/widgetsets/de.dinkov.vlsapp.VLSAppWidgetset/diagram/" + d.type+ ".png"; })
                 .attr("x", "-6px")
                 .attr("y", "-6px")
                 .attr("width", "12px")

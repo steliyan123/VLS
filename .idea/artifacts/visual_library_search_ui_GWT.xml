@@ -3,6 +3,11 @@
     <output-path>$PROJECT_DIR$/visual-library-search-ui/target/classes/VAADIN/widgetsets</output-path>
     <root id="root">
       <element id="gwt-compiler-output" facet="visual-library-search-ui/gwt/GWT" />
+      <element id="directory" name="VAADIN">
+        <element id="directory" name="widgetsets">
+          <element id="gwt-compiler-output" facet="visual-library-search-ui/gwt/GWT" />
+        </element>
+      </element>
     </root>
   </artifact>
 </component>

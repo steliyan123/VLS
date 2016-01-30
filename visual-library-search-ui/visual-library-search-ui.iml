@@ -13,6 +13,8 @@
         <setting name="additionalCompilerParameters" value="-Xss1024k" />
         <setting name="compilerMaxHeapSize" value="512" />
         <setting name="gwtScriptOutputStyle" value="OBF" />
+        <setting name="gwtSdkUrl" value="file://C:\Users\Steliyan\.m2\repository/com/vaadin/vaadin-client/7.6.1" />
+        <setting name="gwtSdkType" value="Vaadin-Maven" />
         <setting name="webFacet" value="Web" />
       </configuration>
     </facet>
@@ -27,6 +29,7 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" name="Maven: org.vaadin.addons:dragdroplayouts:1.1.3" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Maven: javax.servlet:javax.servlet-api:3.0.1" level="project" />
     <orderEntry type="library" name="Maven: com.vaadin:vaadin-server:7.6.1" level="project" />
     <orderEntry type="library" name="Maven: com.vaadin:vaadin-sass-compiler:0.9.13" level="project" />
@@ -62,6 +65,8 @@
     <orderEntry type="library" name="Maven: org.ow2.asm:asm:4.1" level="project" />
     <orderEntry type="library" name="Maven: org.ow2.asm:asm-commons:4.1" level="project" />
     <orderEntry type="library" name="Maven: org.yaml:snakeyaml:1.12" level="project" />
+    <orderEntry type="library" name="Maven: com.vaadin:vaadin-client:7.6.1" level="project" />
+    <orderEntry type="library" name="Maven: javax.validation:validation-api:sources:1.0.0.GA" level="project" />
     <orderEntry type="module" module-name="visual-library-search-widgetset" />
     <orderEntry type="library" name="Maven: org.hibernate:hibernate-validator:5.1.0.CR1" level="project" />
     <orderEntry type="library" name="Maven: org.jboss.logging:jboss-logging:3.1.3.GA" level="project" />
@@ -69,5 +74,11 @@
     <orderEntry type="library" scope="TEST" name="Maven: junit:junit:4.11" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: org.hamcrest:hamcrest-core:1.3" level="project" />
     <orderEntry type="library" name="Maven: com.googlecode.json-simple:json-simple:1.1.1" level="project" />
+    <orderEntry type="library" name="Maven: org.vaadin.addons:popupbutton:2.5.0" level="project" />
+    <orderEntry type="library" name="Maven: org.vaadin.addons:fonticon:7.1.1" level="project" />
+    <orderEntry type="library" name="Maven: com.zipsoft:clicklabel:1.0.0" level="project" />
+    <orderEntry type="library" name="Maven: org.vaadin.addons:sizereporter:0.1.4" level="project" />
+    <orderEntry type="library" name="Maven: org.vaadin.addons:restrain:0.1" level="project" />
+    <orderEntry type="library" name="Maven: org.vaadin.marcus:mouse-events:1.0.0" level="project" />
   </component>
 </module>

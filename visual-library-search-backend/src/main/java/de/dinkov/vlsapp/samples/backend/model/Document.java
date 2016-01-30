@@ -1,9 +1,9 @@
 /**
  * Project name: VLS
- * Package name: de.dinkov.vlsapp.samples.backend.Entities.
+ * Package name: de.dinkov.vlsapp.samples.backend.model.
  * Created by Steliyan Dinkov on 1/23/2016.
  */
-package de.dinkov.vlsapp.samples.backend.Entities;
+package de.dinkov.vlsapp.samples.backend.model;
 
 import java.util.ArrayList;
 import java.util.Comparator;
