@@ -1,37 +1,35 @@
-package de.dinkov.vlsapp.samples.backend.elastic_search;
-
-import de.dinkov.vlsapp.samples.backend.Entities.Document;
-import java.util.ArrayList;
-
-import org.elasticsearch.*;
 /**
  * Project name: VLS
  * Package name: de.dinkov.vlsapp.samples.backend.elastic_search.
  * Created by Steliyan Dinkov on 1/23/2016.
  */
+package de.dinkov.vlsapp.samples.backend.elastic_search;
+
+import de.dinkov.vlsapp.samples.backend.Entities.Document;
+import java.util.ArrayList;
+
 public class DiagramStrategy {
 
-    private String strategy, keywords;
+    private String strategy, keywords, field;
     private ArrayList<Document> result;
+    private DiagramElasticSearchHandler handler;
 
-    public DiagramStrategy(String strategy, String keywords) {
+    public DiagramStrategy(String strategy, String keywords, String field) {
         this.strategy=strategy;
         this.keywords=keywords;
-        result = new ArrayList<Document>();
+        this.field=field;
+        this.result = new ArrayList<Document>();
+        this.handler = new DiagramElasticSearchHandler();
     }
 
-    public DiagramStrategy() {}
-
     public DiagramStrategy applySearchFormStrategySearch() {
-
-        DiagramElasticSearchHandler eshandler = new DiagramElasticSearchHandler();
-
         switch (strategy) {
-            case "document":
-                result = eshandler.searchDocument("dlsnew", "document", "topics.name", keywords, "citedFrom");
+            case "document": result = handler.searchDocument("dlsnew", strategy, keywords, field);
+                //eshandler.closeNode();
+                break;
+            default: result = handler.searchDocument("dlsnew", "document", "Khriplovich", "name");
                 break;
         }
-
         return this;
     }
 
