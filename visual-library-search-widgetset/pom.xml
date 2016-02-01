@@ -28,6 +28,13 @@
             <artifactId>visual-library-search-backend</artifactId>
             <version>${project.version}</version>
         </dependency>
+
+        <!-- Diagram Paging Component -->
+        <dependency>
+            <groupId>org.vaadin.addons</groupId>
+            <artifactId>pagingcomponent</artifactId>
+            <version>0.9.6</version>
+        </dependency>
     </dependencies>
 
     <build>

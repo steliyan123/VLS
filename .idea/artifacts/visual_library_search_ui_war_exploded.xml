@@ -46,6 +46,7 @@
           <element id="archive" name="visual-library-search-widgetset-1.0-SNAPSHOT.jar">
             <element id="module-output" name="visual-library-search-widgetset" />
           </element>
+          <element id="library" level="project" name="Maven: org.vaadin.addons:pagingcomponent:0.9.6" />
           <element id="library" level="project" name="Maven: org.hibernate:hibernate-validator:5.1.0.CR1" />
           <element id="library" level="project" name="Maven: org.jboss.logging:jboss-logging:3.1.3.GA" />
           <element id="library" level="project" name="Maven: com.fasterxml:classmate:1.0.0" />

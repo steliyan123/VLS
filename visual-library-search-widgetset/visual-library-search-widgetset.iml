@@ -96,5 +96,6 @@
     <orderEntry type="library" name="Maven: com.spatial4j:spatial4j:0.4.1" level="project" />
     <orderEntry type="library" name="Maven: org.antlr:antlr-runtime:3.5" level="project" />
     <orderEntry type="library" name="Maven: org.yaml:snakeyaml:1.12" level="project" />
+    <orderEntry type="library" name="Maven: org.vaadin.addons:pagingcomponent:0.9.6" level="project" />
   </component>
 </module>

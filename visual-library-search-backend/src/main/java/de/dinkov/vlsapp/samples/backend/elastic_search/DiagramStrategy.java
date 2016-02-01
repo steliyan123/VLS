@@ -10,14 +10,15 @@ import java.util.ArrayList;
 
 public class DiagramStrategy {
 
-    private String strategy, keywords, field;
+    private String keywords, field;
     private ArrayList<Document> result;
+    private String strategy;
     private DiagramElasticSearchHandler handler;
 
     public DiagramStrategy(String strategy, String keywords, String field) {
-        this.strategy=strategy;
-        this.keywords=keywords;
-        this.field=field;
+        this.keywords = keywords;
+        this.field = field;
+        this.strategy = strategy;
         this.result = new ArrayList<Document>();
         this.handler = new DiagramElasticSearchHandler();
     }
@@ -25,11 +26,11 @@ public class DiagramStrategy {
     public DiagramStrategy applySearchFormStrategySearch() {
         switch (strategy) {
             case "document": result = handler.searchDocument("dlsnew", strategy, keywords, field);
-                //eshandler.closeNode();
                 break;
             default: result = handler.searchDocument("dlsnew", "document", "Khriplovich", "name");
                 break;
         }
+        handler.destroy();
         return this;
     }
 

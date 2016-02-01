@@ -5,34 +5,26 @@
  */
 package de.dinkov.vlsapp.samples.backend.elastic_search;
 
-import java.lang.String;
-import de.dinkov.vlsapp.samples.backend.Entities.Document;
-//import org.elasticsearch.action.get.GetResponse;
+import static org.elasticsearch.node.NodeBuilder.nodeBuilder;
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.action.search.SearchType;
 import org.elasticsearch.client.Client;
-import org.elasticsearch.client.transport.TransportClient;
-import org.elasticsearch.common.settings.ImmutableSettings;
-import org.elasticsearch.common.settings.Settings;
-import org.elasticsearch.common.transport.InetSocketTransportAddress;
 import org.elasticsearch.index.query.QueryBuilders;
-//import org.elasticsearch.node.Node;
-//import static org.elasticsearch.node.NodeBuilder.nodeBuilder;
+import org.elasticsearch.node.Node;
 import org.elasticsearch.search.SearchHit;
+
+import java.lang.String;
 import java.util.ArrayList;
 import java.util.Map;
 
+import de.dinkov.vlsapp.samples.backend.Entities.Document;
+
 public class DiagramElasticSearchHandler {
 
-    //Node node;
-    Client client;
+    Node node = nodeBuilder().client(true).build().start();
+    Client client = node.client();
 
-    public DiagramElasticSearchHandler() {
-        //node = nodeBuilder().client(true).node();
-        //client = node.client();
-        Settings settings = ImmutableSettings.settingsBuilder().put("client.transport.sniff", true).build();
-        client = new TransportClient(settings).addTransportAddress(new InetSocketTransportAddress("localhost", 9200));
-    }
+    public DiagramElasticSearchHandler() { }
 
     public ArrayList<Document> searchDocument(String index, String type, String name, String field)
     {
@@ -50,7 +42,7 @@ public class DiagramElasticSearchHandler {
             Document d = getDocFromJSON(result);
             results_list.add(d);
         }
-        //node.close();
+
         return results_list;
     }
 
@@ -58,32 +50,25 @@ public class DiagramElasticSearchHandler {
         Document doc = new Document();
         for (Map.Entry<String, Object> entry : result.entrySet()) {
             String key = entry.getKey();
-            if (key.equals("title")) {
-                doc.setTitle(entry.getValue().toString());
+            switch (key) {
+                case "title": doc.setTitle(entry.getValue().toString()); break;
+                case "id": doc.setId(entry.getValue().toString()); break;
+                case "citedFrom": doc.setReferencedCount(new Integer(entry.getValue().toString())); break;
+                case "classification": doc.setClassification(entry.getValue().toString()); break;
+                case "cited":
+                    ArrayList<Map<String, Object>> citedDocs = (ArrayList<Map<String, Object>>) entry.getValue();
+                    doc.setCitedFrom(citedDocs.size());
+                    break;
+                case "url": doc.setURL(entry.getValue().toString());
             }
         }
         return doc;
     }
 
-    public void destroy()
-    {
+    public void destroy() {
         client.close();
+        node.stop();
+        node.close();
     }
 
-    /*public Document getDocument(String index, String type, String id) {
-
-        Client client = node.client();
-        GetResponse getResponse = client.prepareGet(index, type, id).execute().actionGet();
-        Map<String, Object> source = getResponse.getSource();
-        // node.close();
-
-        if (source != null)
-            return getDocFromJSON(source);
-        else
-            return new Document();
-    }*/
-
-    /*public void closeNode() {
-        node.close();
-    }*/
 }
