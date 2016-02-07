@@ -1,34 +1,41 @@
 window.de_dinkov_vlsapp_samples_Diagram = function() {
     var diagramElement = $(this.getElement()).height("100%").width("100%")[0];
     console.debug('de_dinkov_vlsapp_samples_Diagram: ',diagramElement);
-    var tree, nodeName,nodeType,nodeId, sanitizedNodes;
+    var tree, sanitizedNodes;
     var self__ = this;
-
 
     // Handle changes from the server-side
     // re-draws the tree using the state variable treedata
     this.onStateChange = function() {
         var treedata = JSON.parse(this.getState().treeData);
+        console.log("[onStateChange]: ", treedata);
+        if (!treedata) return;
+        console.log("Growing tree...");
         tree = this.growTree(diagramElement,treedata);
     };
 
-    //will be called from server-side
-    this.displayMsg = function(name) {
-        alert("Highligth called from js! Nov name: "+ name);
-        console.log("Nov name: ",name);
-
+    // wrapping the updateTree method attached to the diagram object
+    this.updateTree = function(treedata) {
+        console.log("HUHUUUU, growing da tree with: ", treedata);
+        console.trace();
+        if (treedata) {
+            this.growTree(diagramElement, JSON.parse(treedata));
+        }
     };
 
-    // returns the name of the node clicked by the user
-    this.clickTreeNodeLabel = function(){
-        return labelClick;
-        // TODO
-    }
-    // returns the whole tree JSON object
-    this.returnSanitizedTreeData = function (){
-        // TODO
-        return sanitizedNodes;
-    }
+    // registering an object with functions that will be
+    // called from the server.
+    /*this.registerRpc({
+        updateTree: function(treedata) {
+            console.log("REGISTRIRAH RPC!");
+            console.log("treedatata e: ", treedata);
+            if (treedata) {
+                console.log("Vikam worker-a");
+                self__.updateTree(treedata);
+            }
+        }
+    });*/
+
     this.growTree = function(diagramElement,treeData){
 
         // Calculate total nodes, max label length
@@ -366,11 +373,7 @@ window.de_dinkov_vlsapp_samples_Diagram = function() {
         }
         function clickText(d){
             if (d3.event.defaultPrevented) return; // click suppressed
-            nodeName =  d.name;
-            nodeType = d.type;
-            nodeId = d.nodeId;
-
-            self__.onPlotClick(nodeName,nodeType,nodeId);
+             self__.onPlotClick(d.name,d.type,d.nodeId);
         }
         function update(source) {
             // Compute the new height, function counts total children of root node and sets tree height accordingly.

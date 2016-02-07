@@ -5,7 +5,7 @@
  */
 package de.dinkov.vlsapp.samples.backend.elastic_search;
 
-import static org.elasticsearch.node.NodeBuilder.nodeBuilder;
+import de.dinkov.vlsapp.samples.backend.Entities.Document;
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.action.search.SearchType;
 import org.elasticsearch.client.Client;
@@ -13,20 +13,20 @@ import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.node.Node;
 import org.elasticsearch.search.SearchHit;
 
-import java.lang.String;
 import java.util.ArrayList;
 import java.util.Map;
 
-import de.dinkov.vlsapp.samples.backend.Entities.Document;
+import static org.elasticsearch.node.NodeBuilder.nodeBuilder;
 
 public class DiagramElasticSearchHandler {
 
-    Node node = nodeBuilder().client(true).build().start();
-    Client client = node.client();
+    private Node node = nodeBuilder().client(true).build().start();
+    private Client client = node.client();
+    private String index = "dlsnew";
 
     public DiagramElasticSearchHandler() { }
 
-    public ArrayList<Document> searchDocument(String index, String type, String name, String field)
+    public ArrayList<Document> searchDocument(String type, String name, String field)
     {
         SearchResponse response = client.prepareSearch(index).setTypes(type)
                 .setSearchType(SearchType.QUERY_AND_FETCH)
@@ -59,7 +59,16 @@ public class DiagramElasticSearchHandler {
                     ArrayList<Map<String, Object>> citedDocs = (ArrayList<Map<String, Object>>) entry.getValue();
                     doc.setCitedFrom(citedDocs.size());
                     break;
-                case "url": doc.setURL(entry.getValue().toString());
+                case "authors":
+                    ArrayList<Map<String, Object>> authors = (ArrayList<Map<String, Object>>) entry.getValue();
+                    ArrayList<String> authors_list = new ArrayList<String>();
+
+                    for (Map<String, Object> author : authors) {
+                        authors_list.add(author.get("name").toString());
+                    }
+                    doc.setAuthors(authors_list);
+                    break;
+                case "url": doc.setURL(entry.getValue().toString()); break;
             }
         }
         return doc;

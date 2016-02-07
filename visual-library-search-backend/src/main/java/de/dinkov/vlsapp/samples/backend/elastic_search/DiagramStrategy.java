@@ -25,9 +25,9 @@ public class DiagramStrategy {
 
     public DiagramStrategy applySearchFormStrategySearch() {
         switch (strategy) {
-            case "document": result = handler.searchDocument("dlsnew", strategy, keywords, field);
+            case "document": result = handler.searchDocument(strategy, keywords, field);
                 break;
-            default: result = handler.searchDocument("dlsnew", "document", "Khriplovich", "name");
+            default: result = handler.searchDocument("document", "Khriplovich", "name");
                 break;
         }
         handler.destroy();

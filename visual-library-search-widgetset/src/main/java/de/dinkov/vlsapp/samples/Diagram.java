@@ -1,21 +1,13 @@
 package de.dinkov.vlsapp.samples;
 
 import com.vaadin.annotations.JavaScript;
-import com.vaadin.server.ExternalResource;
-import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.*;
-import org.vaadin.pagingcomponent.PagingComponent;
-//import org.vaadin.pagingcomponent.listener.impl.SimplePagingComponentListener;
-
+import com.vaadin.ui.renderers.HtmlRenderer;
 import de.dinkov.vlsapp.samples.backend.Entities.Document;
 import de.dinkov.vlsapp.samples.backend.elastic_search.DiagramStrategy;
-
 import elemental.json.JsonArray;
-import org.vaadin.pagingcomponent.listener.impl.LazyPagingComponentListener;
 
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
 
 @JavaScript({ "d3.min.js", "diagram_connector.js", "jquery-1.11.3.min.js" })
 public class Diagram extends AbstractJavaScriptComponent {
@@ -28,8 +20,8 @@ public class Diagram extends AbstractJavaScriptComponent {
         addFunction("onPlotClick", new JavaScriptFunction() {
             @Override
             public void call(JsonArray arguments) {
-                String authorName = (String) arguments.getString(0);
-                String strategy = (String) arguments.getString(1);
+                String authorName = arguments.getString(0);
+                String strategy = arguments.getString(1);
                 String field    = "name";
 
                 DiagramStrategy diagramStrategy = new DiagramStrategy(strategy, authorName, field);
@@ -44,8 +36,12 @@ public class Diagram extends AbstractJavaScriptComponent {
         getState().treeData = data;
     }
 
-    public void displayMsg(String newName) {
-        callFunction("displayMsg", newName);
+    public void updateTree(String treedata) {
+        // Returns an RPC proxy for a given server to client RPC interface for
+        // this component
+        //getRpcProxy(DiagramUpdateRpc.class).updateTree(treedata);
+        // Invokes the "updateTree" function in the js_connctor.
+        callFunction("updateTree", treedata);
     }
 
     @Override
@@ -55,40 +51,47 @@ public class Diagram extends AbstractJavaScriptComponent {
 
     public void displayPopUp(String author, ArrayList<Document> result) {
 
-        Window popup = new Window(author);
-        //VerticalLayout subContent = new VerticalLayout();
-        Grid subContent = new Grid();
-        subContent.addColumn("ID", String.class);
-        subContent.addColumn("Title", String.class);
-       // subContent.addColumn("Cited from", int.class);
-       // subContent.addColumn("Referenced by", String.class);
-       // subContent.addColumn("URL", Link.class);
+        Grid grid = new Grid();
+        VerticalLayout content  = new VerticalLayout();
+        Window popup = new Window("Documents for: " + author);
 
-       // subContent.setMargin(true);
-      //  popup.setWidth(500, Unit.PIXELS);
+        grid.addColumn("ID", String.class).setMaximumWidth(100);
+        grid.addColumn("Title", String.class);
+        grid.addColumn("URL", String.class).setRenderer(new HtmlRenderer());
+        grid.setSelectionMode(Grid.SelectionMode.NONE);
+        grid.setResponsive(true);
+
+        content.addComponent(grid);
+        content.setExpandRatio(grid,1);
+        content.setMargin(true);
+        content.setSpacing(true);
+       // grid.addColumn("Cited from", int.class);
+       // grid.addColumn("Referenced by", String.class);
+       // grid.addColumn("URL", Link.class);
+
+       // grid.setMargin(true);
+
+
         popup.center();
 
-        int i = 0;
+        //int i = 0;
         for (Document doc: result) {
-            /*subContent.addComponent(new Label("Id: " + doc.getId()));
-            subContent.addComponent(new Label("Title: " + doc.getTitle()));
-            //subContent.addComponent(new Label("Classification: " + doc.getTitle()));
-            subContent.addComponent(new Label("Cited from: " + doc.getCitedFrom()));
-            subContent.addComponent(new Label("Referenced by: " + doc.getReferencedCount()));
+            /*grid.addComponent(new Label("Id: " + doc.getId()));
+            grid.addComponent(new Label("Title: " + doc.getTitle()));
+            //grid.addComponent(new Label("Classification: " + doc.getTitle()));
+            grid.addComponent(new Label("Cited from: " + doc.getCitedFrom()));
+            grid.addComponent(new Label("Referenced by: " + doc.getReferencedCount()));
             String url = doc.getURL();
-            subContent.addComponent(new Link(url, new ExternalResource(url)));
-            subContent.addComponent(new Label("<hr>", ContentMode.HTML));
+            grid.addComponent(new Link(url, new ExternalResource(url)));
+            grid.addComponent(new Label("<hr>", ContentMode.HTML));
             if (i++ > 3) break;*/
             String url = doc.getURL();
-            Link link = new Link(url, new ExternalResource(url));
-            subContent.addRow(doc.getId(),doc.getTitle());
+            grid.addRow(doc.getId(),doc.getTitle(),"<a href='"+url+"' target='_blank'>Source</a>");
 
         }
 
-        //subContent.addComponent(getPagination(result));
-        popup.setContent(subContent);
-
-
+        //grid.addComponent(getPagination(result));
+        popup.setContent(content);
 
         // Open it in the UI
         UI.getCurrent().addWindow(popup);

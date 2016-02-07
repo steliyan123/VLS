@@ -1,14 +1,13 @@
 package de.dinkov.vlsapp.samples;
 
-import de.dinkov.vlsapp.VlsAppUI;
-import de.dinkov.vlsapp.samples.about.AboutView;
-import de.dinkov.vlsapp.samples.crud.SampleCrudView;
-
 import com.vaadin.navigator.Navigator;
 import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.HorizontalLayout;
+import de.dinkov.vlsapp.VlsAppUI;
+import de.dinkov.vlsapp.samples.about.AboutView;
+import de.dinkov.vlsapp.samples.crud.SampleCrudView;
 import de.dinkov.vlsapp.samples.diagram.DiagramView;
 
 /**
@@ -36,7 +35,8 @@ public class MainScreen extends HorizontalLayout {
                 FontAwesome.INFO_CIRCLE);
         menu.addView(new AboutView(), AboutView.VIEW_NAME, AboutView.VIEW_NAME,
                 FontAwesome.INFO_CIRCLE);
-
+       /* menu.addView(new SearchView(), SearchView.VIEW_NAME, SearchView.VIEW_NAME,
+                FontAwesome.INFO_CIRCLE);*/
         navigator.addViewChangeListener(viewChangeListener);
 
         addComponent(menu);
