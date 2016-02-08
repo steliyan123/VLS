@@ -17,18 +17,15 @@ public class Diagram extends AbstractJavaScriptComponent {
         addCallBacks();
     }
     public void addCallBacks(){
-        addFunction("onPlotClick", new JavaScriptFunction() {
-            @Override
-            public void call(JsonArray arguments) {
-                String authorName = arguments.getString(0);
-                String strategy = arguments.getString(1);
-                String field    = "name";
+        addFunction("onPlotClick", (JavaScriptFunction) arguments -> {
+            String authorName = arguments.getString(0);
+            String strategy = arguments.getString(1);
+            String field    = "name";
 
-                DiagramStrategy diagramStrategy = new DiagramStrategy(strategy, authorName, field);
-                ArrayList<Document> result = diagramStrategy.applySearchFormStrategySearch().getResult();
+            DiagramStrategy diagramStrategy = new DiagramStrategy(strategy, authorName, field);
+            ArrayList<Document> result = diagramStrategy.applySearchFormStrategySearch().getResult();
 
-                displayPopUp(authorName, result);
-            }
+            displayPopUp(authorName, result);
         });
     }
 
@@ -85,9 +82,7 @@ public class Diagram extends AbstractJavaScriptComponent {
             grid.addComponent(new Link(url, new ExternalResource(url)));
             grid.addComponent(new Label("<hr>", ContentMode.HTML));
             if (i++ > 3) break;*/
-            String url = doc.getURL();
-            grid.addRow(doc.getId(),doc.getTitle(),"<a href='"+url+"' target='_blank'>Source</a>");
-
+            grid.addRow(doc.getId(), doc.getTitle(), "<a href='" + doc.getURL() + "' target='_blank'>Source</a>");
         }
 
         //grid.addComponent(getPagination(result));

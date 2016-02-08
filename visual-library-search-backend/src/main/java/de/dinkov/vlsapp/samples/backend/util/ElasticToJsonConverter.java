@@ -16,7 +16,7 @@ import java.util.*;
 public class ElasticToJsonConverter {
 
     private ArrayList<Document> elasticSearchResults;
-    private String parsedResult = "", strategy = "", term = "";
+    private String strategy = "", term = "";
     private JSONObject obj;
 
     public ElasticToJsonConverter(String strategy, String searchTerm, ArrayList<Document> results){
@@ -24,9 +24,7 @@ public class ElasticToJsonConverter {
         this.strategy = strategy;
         this.term = searchTerm;
         this.obj = new JSONObject();
-    }
 
-    public ElasticToJsonConverter parse() {
         LinkedList listChildNodes = new LinkedList();
         int i = 1;
         for (Document d: elasticSearchResults) {
@@ -42,8 +40,6 @@ public class ElasticToJsonConverter {
         obj.put("name", term);
         obj.put("type", "topic");
         obj.put("children", listChildNodes);
-
-        return this;
     }
 
     public String getResult() {

@@ -5,9 +5,8 @@ import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 import com.vaadin.ui.*;
 import de.dinkov.vlsapp.samples.Diagram;
 import de.dinkov.vlsapp.samples.backend.Entities.DiagramMainSearchStrategies;
+import de.dinkov.vlsapp.samples.backend.elastic_search.DiagramStrategy;
 import de.dinkov.vlsapp.samples.backend.util.ElasticToJsonConverter;
-
-import java.util.ArrayList;
 
 /**
  * Project name: VLS
@@ -31,31 +30,26 @@ public class SearchView extends VerticalLayout implements View {
         searchStrategies.addItem(DiagramMainSearchStrategies.PERSON);
         searchStrategies.addItem(DiagramMainSearchStrategies.DOCUMENTS);
         searchStrategies.addItem(DiagramMainSearchStrategies.TOPIC);
+        searchStrategies.setTextInputAllowed(false);
 
-        TextField searchInput = new TextField("type something here to search");
+        TextField searchInput = new TextField();
 
         Button searchBtn = new Button("Search");
         searchBtn.addClickListener((Button.ClickListener) event -> {
             String searchTerm = searchInput.getValue();
             DiagramMainSearchStrategies strategy = (DiagramMainSearchStrategies) searchStrategies.getValue();
-            DiagramMainSearchViewLogic logic = new DiagramMainSearchViewLogic(searchTerm, strategy.toString());
+            DiagramStrategy diagramStrategy = new DiagramStrategy(strategy.toString(), searchTerm, "name");
             ElasticToJsonConverter converter = new ElasticToJsonConverter(
                     strategy.toString().toLowerCase(),
                     searchTerm,
-                    logic.getResult()
+                    diagramStrategy.applySearchFormStrategySearch().getResult()
             );
-            String result = converter.parse().getResult();
-            diagram.updateTree(result);
+            diagram.updateTree(converter.getResult());
         });
 
-        ArrayList<Component> components = new ArrayList<Component>();
-        components.add(searchStrategies);
-        components.add(searchInput);
-        components.add(searchBtn);
-
-        for (Component c : components) {
-            searchContent.addComponent(c);
-        }
+        searchContent.addComponent(searchStrategies);
+        searchContent.addComponent(searchInput);
+        searchContent.addComponent(searchBtn);
     }
 
     public HorizontalLayout getSearchBar() {
