@@ -34,13 +34,13 @@ public class Menu extends CssLayout {
     private Navigator navigator;
     private Map<String, Button> viewButtons = new HashMap<String, Button>();
 
-    private CssLayout menuItemsLayout;
-    private CssLayout menuPart;
+    private HorizontalLayout  menuItemsLayout;
+    private HorizontalLayout  menuPart;
 
     public Menu(Navigator navigator) {
         this.navigator = navigator;
         setPrimaryStyleName(ValoTheme.MENU_ROOT);
-        menuPart = new CssLayout();
+        menuPart = new HorizontalLayout();
         menuPart.addStyleName(ValoTheme.MENU_PART);
 
         // header of the menu
@@ -89,7 +89,7 @@ public class Menu extends CssLayout {
         menuPart.addComponent(showMenu);
 
         // container for the navigation buttons, which are added by addView()
-        menuItemsLayout = new CssLayout();
+        menuItemsLayout = new HorizontalLayout();
         menuItemsLayout.setPrimaryStyleName(VALO_MENUITEMS);
         menuPart.addComponent(menuItemsLayout);
 

@@ -4,7 +4,7 @@ import com.vaadin.navigator.Navigator;
 import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.ui.CssLayout;
-import com.vaadin.ui.HorizontalLayout;
+import com.vaadin.ui.VerticalLayout;
 import de.dinkov.vlsapp.VlsAppUI;
 import de.dinkov.vlsapp.samples.about.AboutView;
 import de.dinkov.vlsapp.samples.crud.SampleCrudView;
@@ -15,7 +15,7 @@ import de.dinkov.vlsapp.samples.diagram.DiagramView;
  * 
  * 
  */
-public class MainScreen extends HorizontalLayout {
+public class MainScreen extends VerticalLayout {
     private Menu menu;
 
     public MainScreen(VlsAppUI ui) {
