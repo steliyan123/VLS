@@ -39,5 +39,4 @@ public class DiagramView extends VerticalLayout implements View {
 
     @Override
     public void enter(ViewChangeEvent event) { }
-
 }

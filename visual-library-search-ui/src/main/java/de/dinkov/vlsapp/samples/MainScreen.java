@@ -8,6 +8,7 @@ import com.vaadin.ui.VerticalLayout;
 import de.dinkov.vlsapp.VlsAppUI;
 import de.dinkov.vlsapp.samples.about.AboutView;
 import de.dinkov.vlsapp.samples.crud.SampleCrudView;
+import de.dinkov.vlsapp.samples.diagram.DiagramMainTabView;
 import de.dinkov.vlsapp.samples.diagram.DiagramView;
 
 /**
@@ -31,7 +32,7 @@ public class MainScreen extends VerticalLayout {
         menu = new Menu(navigator);
         menu.addView(new SampleCrudView(), SampleCrudView.VIEW_NAME,
                 SampleCrudView.VIEW_NAME, FontAwesome.EDIT);
-        menu.addView(new DiagramView(), DiagramView.VIEW_NAME, DiagramView.VIEW_NAME,
+        menu.addView(new DiagramMainTabView(), DiagramView.VIEW_NAME, DiagramView.VIEW_NAME,
                 FontAwesome.INFO_CIRCLE);
         menu.addView(new AboutView(), AboutView.VIEW_NAME, AboutView.VIEW_NAME,
                 FontAwesome.INFO_CIRCLE);

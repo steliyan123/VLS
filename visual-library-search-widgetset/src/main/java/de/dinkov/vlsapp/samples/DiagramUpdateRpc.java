@@ -9,5 +9,5 @@ package de.dinkov.vlsapp.samples;
 import com.vaadin.shared.communication.ClientRpc;
 
 public interface DiagramUpdateRpc extends ClientRpc {
-    public void updateTree(String treedata);
+    void updateTree(String treedata);
 }

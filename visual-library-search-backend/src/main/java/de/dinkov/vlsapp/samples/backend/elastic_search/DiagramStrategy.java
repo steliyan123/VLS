@@ -19,7 +19,7 @@ public class DiagramStrategy {
         this.keywords = keywords;
         this.field = field;
         this.strategy = strategy;
-        this.result = new ArrayList<Document>();
+        this.result = new ArrayList<>();
         this.handler = new DiagramElasticSearchHandler();
     }
 
