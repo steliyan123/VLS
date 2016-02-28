@@ -1,5 +1,4 @@
-/**
- * Created by Steliyan on 1/21/2016.
+/** * Created by Steliyan on 1/21/2016.
  * @package de.dinkov.vlsapp.samples.diagram
  */
 
@@ -12,19 +11,24 @@ import com.vaadin.ui.CustomLayout;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.VerticalLayout;
 import de.dinkov.vlsapp.samples.Diagram;
+import de.dinkov.vlsapp.samples.backend.SearchSession;
 import de.dinkov.vlsapp.samples.search.SearchView;
 
 public class DiagramView extends VerticalLayout implements View {
 
     private static final long serialVersionUID = 1L;
     public static final String VIEW_NAME = "Diagram";
+    private HorizontalLayout searchContent = null;
+    private SearchView searchView = null;
+    private Diagram diagram = null;
 
-    public DiagramView() {
-        Diagram diagram = new Diagram();
+    public DiagramView(SearchSession newSearchSession) {
+        diagram = new Diagram();
         diagram.addTreeData("");
         diagram.setStyleName("diagram-content");
 
-        HorizontalLayout searchContent = new SearchView(diagram).getSearchBar();
+        searchView = new SearchView(diagram, newSearchSession);
+        searchContent = searchView.getSearchBar();
 
         CustomLayout diagramView = new CustomLayout("diagramview");
         diagramView.setStyleName("diagram-content");
@@ -35,6 +39,14 @@ public class DiagramView extends VerticalLayout implements View {
         setStyleName("diagram-view");
         addComponent(diagramView);
         setComponentAlignment(diagramView, Alignment.MIDDLE_CENTER);
+    }
+
+    public HorizontalLayout getSearchViewComponent() {
+        return searchContent;
+    }
+
+    public SearchView getSearchView() {
+        return searchView;
     }
 
     @Override

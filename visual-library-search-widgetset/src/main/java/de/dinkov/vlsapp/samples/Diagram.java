@@ -5,7 +5,6 @@ import com.vaadin.ui.*;
 import com.vaadin.ui.renderers.HtmlRenderer;
 import de.dinkov.vlsapp.samples.backend.Entities.Document;
 import de.dinkov.vlsapp.samples.backend.elastic_search.DiagramStrategy;
-import elemental.json.JsonArray;
 
 import java.util.ArrayList;
 
@@ -85,51 +84,9 @@ public class Diagram extends AbstractJavaScriptComponent {
             grid.addRow(doc.getId(), doc.getTitle(), "<a href='" + doc.getURL() + "' target='_blank'>Source</a>");
         }
 
-        //grid.addComponent(getPagination(result));
         popup.setContent(content);
 
         // Open it in the UI
         UI.getCurrent().addWindow(popup);
     }
-
-    /*private HorizontalLayout getPagination(ArrayList<Document> result) {
-
-        HorizontalLayout paginationLayout = new HorizontalLayout();
-        VerticalLayout vl = new VerticalLayout();
-        int resultSize = result.size();
-        DiagramElasticSearchResult res = new DiagramElasticSearchResult(result);
-
-        // Visual controls (First, Previous, 1 2 ..., Next, Last)
-        final PagingComponent<Integer> pagingComponent = PagingComponent.paginate(createItems(resultSize))
-                .numberOfItemsPerPage(5)
-                .numberOfButtonsPage(4)
-                .addListener(new LazyPagingComponentListener<Document>(paginationLayout) {
-
-                    @Override
-                    protected Collection<Document> getItemsList(int startIndex, int endIndex) {
-                        // Here we can load the items from the DB
-                        return res.getDocumentsFromRange(startIndex, endIndex);
-                    }
-
-                    @Override
-                    protected Component displayItem(int index, Document doc) {
-                        return new Label(doc.getTitle());
-                    }
-
-                }).build();
-
-        paginationLayout.addComponent(pagingComponent);
-
-        return paginationLayout;
-    }
-
-    private List<Integer> createItems(int n) {
-        List<Integer> items = new ArrayList<Integer>();
-        for (Integer i = 1; i <= n; i++) {
-            items.add(i);
-        }
-
-        return items;
-    }*/
-
 }

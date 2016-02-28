@@ -15,11 +15,13 @@ public class MainViewPresenter implements DiagramMainTabViewInterface.MainViewLi
     public MainViewPresenter(DiagramMainTabView mainview) {
         mainTabView = mainview;
         mainTabView.addListener(this);
-        createNewSession(new SearchSession());
+        createNewSession(new SearchSession().getDefaultSearchSession());
     }
 
     @Override
     public void createNewSession(SearchSession newSearchSession) {
         mainTabView.addNewSessionTab(newSearchSession); // pass model later to viewport
     }
+
+
 }

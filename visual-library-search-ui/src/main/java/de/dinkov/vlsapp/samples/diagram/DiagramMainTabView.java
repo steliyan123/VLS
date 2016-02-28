@@ -3,13 +3,12 @@ package de.dinkov.vlsapp.samples.diagram;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.server.Page;
-import com.vaadin.ui.HorizontalLayout;
-import com.vaadin.ui.Label;
-import com.vaadin.ui.TabSheet;
-import com.vaadin.ui.VerticalLayout;
+import com.vaadin.ui.*;
+import de.dinkov.vlsapp.samples.backend.Entities.SearchModel;
 import de.dinkov.vlsapp.samples.backend.SearchSession;
+import de.dinkov.vlsapp.samples.search.SearchView;
 
-import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * Project name: VLS
@@ -21,7 +20,7 @@ public class DiagramMainTabView extends VerticalLayout implements View, DiagramM
     private static final long serialVersionUID = 1L;
 
     private TabSheet sessionTabBar = new TabSheet();
-    ArrayList<SearchSession> searchSessionList = new ArrayList<>();
+    HashMap<String, DiagramView> searchSessionList = new HashMap<>();
     private MainViewListener listener;
     private MainViewPresenter mainViewPresenter;
 
@@ -58,9 +57,6 @@ public class DiagramMainTabView extends VerticalLayout implements View, DiagramM
         sessionTabBar.setSizeFull();
         sessionTabBar.setImmediate(true);
 
-        SearchSession searchSession = new SearchSession();
-        searchSessionList.add(searchSession);
-
         mainViewPresenter = new MainViewPresenter(this);
 
         addSessionTabBar();
@@ -83,12 +79,45 @@ public class DiagramMainTabView extends VerticalLayout implements View, DiagramM
             @Override
             public void selectedTabChange(TabSheet.SelectedTabChangeEvent event) {
                 TabSheet tabsheet = event.getTabSheet();
-                if (tabsheet.getSelectedTab().getClass() == Label.class) {
+                Component selectedTab = tabsheet.getSelectedTab();
+                Class<?> c = selectedTab.getClass();
+                if (c == Label.class) {
                     Label newSession = (Label) tabsheet.getSelectedTab();
                     if (newSession.getDescription() == "") {
-                        // @todo bind with search data from plot clicks & co.
-                        listener.createNewSession(new SearchSession());
+                        addNewSessionTab(new SearchSession().getDefaultSearchSession());
                     }
+                } else if (c == DiagramView.class) {
+                    String diagramViewSessionTabId = selectedTab.getId();
+                    DiagramView diagramViewSaved = null;
+                    if (searchSessionList.containsKey(diagramViewSessionTabId)) {
+                        diagramViewSaved = searchSessionList.get(diagramViewSessionTabId);
+                    }
+                    DiagramView diagramView = (DiagramView) selectedTab;
+                    SearchView searchView = diagramView.getSearchView();
+                    SearchModel searchModel = searchView.getLastSearch();
+                    SearchModel searchModelSaved = null;
+                    if (diagramViewSaved != null) {
+                        searchModelSaved = diagramViewSaved.getSearchView().getLastSearch();
+                    }
+
+                    String result = "";
+                    if (searchModelSaved != null) {
+                        result = diagramView.getSearchView().getJsonResult(
+                            searchModelSaved.getStrategy().toString(),
+                            searchModelSaved.getKeywords(),
+                            "name"
+                        );
+                    } else {
+                        result = searchView.getJsonResult(
+                            searchModel.getStrategy().toString(),
+                            searchModel.getKeywords(),
+                            "name"
+                        );
+                    }
+
+                    System.out.println("{SELECTED_TAB_CHANGE}: " + result);
+
+                    searchView.setTreeData(result);
                 }
             }
         });
@@ -105,12 +134,18 @@ public class DiagramMainTabView extends VerticalLayout implements View, DiagramM
 
     @Override
     public void addNewSessionTab(SearchSession newSearchSession) {
-        searchSessionList.add(newSearchSession);
 
-        DiagramView diagramView = new DiagramView();
+        DiagramView diagramView = new DiagramView(newSearchSession);
         diagramView.setSizeFull();
+
+        String lala = String.valueOf(sessionTabBar.getTabIndex());
+        String lulu = sessionTabBar.getCaption();
 
         sessionTabBar.addTab(diagramView, "Session " + sessionTabBar.getComponentCount());
         sessionTabBar.setSelectedTab(diagramView);
+
+        String id = String.valueOf(sessionTabBar.getTabIndex());
+        sessionTabBar.getSelectedTab().setId(id);
+        searchSessionList.put(id, diagramView);
     }
 }
