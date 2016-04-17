@@ -1,6 +1,7 @@
 package de.dinkov.vlsapp.samples;
 
 import com.vaadin.annotations.JavaScript;
+import com.vaadin.server.Page;
 import com.vaadin.ui.*;
 import com.vaadin.ui.renderers.HtmlRenderer;
 import de.dinkov.vlsapp.samples.backend.Entities.Document;
@@ -13,21 +14,31 @@ public class Diagram extends AbstractJavaScriptComponent {
 
     public Diagram() {
         // callback that will be called from the client-side
-        addCallBacks();
+        getPlotClickData();
     }
-    public void addCallBacks(){
+    public void getPlotClickData(){
         addFunction("onPlotClick", (JavaScriptFunction) arguments -> {
             String authorName = arguments.getString(0);
             String strategy = arguments.getString(1);
             String field    = "name";
-
-            DiagramStrategy diagramStrategy = new DiagramStrategy(strategy, authorName, field);
-            ArrayList<Document> result = diagramStrategy.applySearchFormStrategySearch().getResult();
-
-            displayPopUp(authorName, result);
+            String theWholeThing = arguments.toJson();
+            Notification not = new Notification(theWholeThing);
+          //  DiagramStrategy diagramStrategy = new DiagramStrategy(strategy, authorName, field);
+          //  ArrayList<Document> result = diagramStrategy.applySearchFormStrategySearch().getResult();
+            not.show(Page.getCurrent());
+           // displayPopUp(authorName, result);
+            //displayPopUp(authorName, result);
         });
     }
 
+    public String getSanitizedTreeData(){
+        final String[] theWholeThing = {new String()};
+        addFunction("returnSanitizedData", (JavaScriptFunction) arguments -> {
+           theWholeThing[0] = arguments.toJson();
+
+        });
+        return theWholeThing[0];
+    }
     public void addTreeData(String data) {
         getState().treeData = data;
     }
@@ -45,7 +56,7 @@ public class Diagram extends AbstractJavaScriptComponent {
         return (DiagramState) super.getState();
     }
 
-    public void displayPopUp(String author, ArrayList<Document> result) {
+   /* public void displayPopUp(String author, ArrayList<Document> result) {
 
         Grid grid = new Grid();
         VerticalLayout content  = new VerticalLayout();
@@ -72,7 +83,7 @@ public class Diagram extends AbstractJavaScriptComponent {
 
         //int i = 0;
         for (Document doc: result) {
-            /*grid.addComponent(new Label("Id: " + doc.getId()));
+            *//*grid.addComponent(new Label("Id: " + doc.getId()));
             grid.addComponent(new Label("Title: " + doc.getTitle()));
             //grid.addComponent(new Label("Classification: " + doc.getTitle()));
             grid.addComponent(new Label("Cited from: " + doc.getCitedFrom()));
@@ -80,7 +91,7 @@ public class Diagram extends AbstractJavaScriptComponent {
             String url = doc.getURL();
             grid.addComponent(new Link(url, new ExternalResource(url)));
             grid.addComponent(new Label("<hr>", ContentMode.HTML));
-            if (i++ > 3) break;*/
+            if (i++ > 3) break;*//*
             grid.addRow(doc.getId(), doc.getTitle(), "<a href='" + doc.getURL() + "' target='_blank'>Source</a>");
         }
 
@@ -88,5 +99,5 @@ public class Diagram extends AbstractJavaScriptComponent {
 
         // Open it in the UI
         UI.getCurrent().addWindow(popup);
-    }
+    }*/
 }

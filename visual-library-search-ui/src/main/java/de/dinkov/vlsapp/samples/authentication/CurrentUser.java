@@ -32,11 +32,7 @@ public final class CurrentUser {
     public static String get() {
         String currentUser = (String) getCurrentRequest().getWrappedSession()
                 .getAttribute(CURRENT_USER_SESSION_ATTRIBUTE_KEY);
-        if (currentUser == null) {
-            return "";
-        } else {
-            return currentUser;
-        }
+        return (currentUser == null) ? "" : currentUser;
     }
 
     /**

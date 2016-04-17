@@ -303,10 +303,13 @@ $v-layout-spacing-horizontal: round($v-unit-size / 1.8) !default;
   .v-ui[width-range~="801px-"] .valo-menu-part {
     margin-bottom: 0;
     padding-bottom: 0;
-    .user-menu {
-      position: relative;
-      float:right;
-      margin-bottom: 0;
+    width:100%;
+    .v-slot.v-slot-user-menu {
+      float: right;
+    }
+    .v-menubar.v-widget.user-menu.v-menubar-user-menu{
+      padding: 18px 32px 8px 16px !important;
+      margin: 0 !important;
     }
     .valo-menu-item {
       padding: 14px 32px 14px 16px;

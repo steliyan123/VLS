@@ -69,7 +69,6 @@ public class Menu extends CssLayout {
         });
 
         logoutMenu.addStyleName("user-menu");
-        menuPart.addComponent(logoutMenu);
 
         // button for toggling the visibility of the menu when on a small screen
         final Button showMenu = new Button("Menu", new ClickListener() {
@@ -91,6 +90,7 @@ public class Menu extends CssLayout {
         // container for the navigation buttons, which are added by addView()
         menuItemsLayout = new HorizontalLayout();
         menuItemsLayout.setPrimaryStyleName(VALO_MENUITEMS);
+        menuItemsLayout.addComponent(logoutMenu);
         menuPart.addComponent(menuItemsLayout);
 
         addComponent(menuPart);

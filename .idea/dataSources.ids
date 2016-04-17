@@ -1,6 +1,45 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <component name="dataSourceStorage">
-  <data-source name="MySQL - vls@localhost" uuid="987693c7-851f-496a-ab21-c3d0811c18b4">
-    <database-info product="" version="" jdbc-version="" driver-name="" driver-version=""/>
+  <data-source name="MySQL - vls1@localhost" uuid="21f283b6-e359-44fb-80f6-b31a4f6256de">
+    <database-info product="MySQL" version="5.6.26" jdbc-version="4.0" driver-name="MySQL Connector Java" driver-version="mysql-connector-java-5.1.35 ( Revision: 5fb9c5849535c13917c2cf9baaece6ef9693ef27 )">
+      <extra-name-characters>#@</extra-name-characters>
+      <identifier-quote-string>`</identifier-quote-string>
+    </database-info>
+    <case-sensitivity plain-identifiers="lower" quoted-identifiers="lower"/>
+    <database-model serializer="dbm" rdbms="MYSQL" format-version="2.5">
+      <schema id="1" name="vls1"/>
+      <table id="2" parent="1" name="user_roles"/>
+      <table id="3" parent="1" name="users"/>
+      <column id="4" parent="2" name="user_name">
+        <mandatory>1</mandatory>
+        <data-type>varchar(100)</data-type>
+      </column>
+      <column id="5" parent="2" name="role_name">
+        <mandatory>1</mandatory>
+        <data-type>varchar(30)</data-type>
+      </column>
+      <key id="6" parent="2" name="PRIMARY">
+        <columns>user_name</columns>
+        <primary>1</primary>
+      </key>
+      <foreign-key id="7" parent="2" name="user_roles_ibfk_1">
+        <columns>user_name</columns>
+        <ref-key>~.users.PRIMARY</ref-key>
+        <cascade-update-rule>restrict</cascade-update-rule>
+        <cascade-delete-rule>restrict</cascade-delete-rule>
+      </foreign-key>
+      <column id="8" parent="3" name="user_name">
+        <mandatory>1</mandatory>
+        <data-type>varchar(100)</data-type>
+      </column>
+      <column id="9" parent="3" name="user_pass">
+        <mandatory>1</mandatory>
+        <data-type>varchar(128)</data-type>
+      </column>
+      <key id="10" parent="3" name="PRIMARY">
+        <columns>user_name</columns>
+        <primary>1</primary>
+      </key>
+    </database-model>
   </data-source>
 </component>

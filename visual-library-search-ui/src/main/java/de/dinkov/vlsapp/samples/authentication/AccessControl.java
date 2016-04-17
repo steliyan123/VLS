@@ -5,7 +5,8 @@ package de.dinkov.vlsapp.samples.authentication;
  */
 public interface AccessControl {
 
-    public boolean signIn(String username, String password);
+    public boolean signIn(String username, String password, Boolean value);
+    public boolean signUp(String username, String password);
 
     public boolean isUserSignedIn();
 

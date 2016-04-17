@@ -32,7 +32,8 @@ public class SearchView extends VerticalLayout implements View {
         this.searchSession = searchSession;
 
         searchContent = new HorizontalLayout();
-
+       // searchContent.setSpacing(true);
+        //searchContent.setMargin(true);
         // create search types drop-down
         ComboBox searchStrategies = new ComboBox();
         searchStrategies.addItem(DiagramMainSearchStrategies.PERSON);
@@ -41,7 +42,7 @@ public class SearchView extends VerticalLayout implements View {
         searchStrategies.setTextInputAllowed(false);
 
         TextField searchInput = new TextField();
-
+        Label label= new Label(diagram.getSanitizedTreeData());
         Button searchBtn = new Button("Search");
         searchBtn.addClickListener((Button.ClickListener) event -> {
             String searchTerm = searchInput.getValue();

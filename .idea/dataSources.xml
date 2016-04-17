@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="DataSourceManagerImpl" format="xml" hash="2411951794">
-    <data-source source="LOCAL" name="MySQL - vls@localhost" uuid="987693c7-851f-496a-ab21-c3d0811c18b4">
+  <component name="DataSourceManagerImpl" format="xml" hash="344453215">
+    <data-source source="LOCAL" name="MySQL - vls1@localhost" uuid="21f283b6-e359-44fb-80f6-b31a4f6256de">
       <driver-ref>mysql</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>com.mysql.jdbc.Driver</jdbc-driver>
-      <jdbc-url>jdbc:mysql://localhost:3306/vls</jdbc-url>
+      <jdbc-url>jdbc:mysql://localhost:3306/vls1</jdbc-url>
       <driver-properties>
+        <property name="autoReconnect" value="true" />
         <property name="zeroDateTimeBehavior" value="convertToNull" />
         <property name="tinyInt1isBit" value="false" />
         <property name="characterEncoding" value="utf8" />

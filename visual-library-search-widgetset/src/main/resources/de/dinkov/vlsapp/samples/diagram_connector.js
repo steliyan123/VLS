@@ -14,12 +14,22 @@ window.de_dinkov_vlsapp_samples_Diagram = function() {
         tree = this.growTree(diagramElement,treedata);
     };
 
-    // wrapping the updateTree method attached to the diagram object
+       // wrapping the updateTree method attached to the diagram object
     this.updateTree = function(treedata) {
-        console.log("HUHUUUU, growing da tree with: ", treedata);
+        console.log("Updating tree with: ", treedata);
         console.trace();
         if (treedata) {
             this.growTree(diagramElement, JSON.parse(treedata));
+        }
+    };
+
+    // wrapping the updateTree method attached to the diagram object
+    this.returnSanitizedData = function() {
+
+        if (sanitizedNodes) {
+        console.log("Sanitized Tree Data : ", sanitizedNodes);
+        console.trace();
+            return sanitizedNodes;
         }
     };
 

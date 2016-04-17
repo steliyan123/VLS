@@ -2,11 +2,14 @@ package de.dinkov.vlsapp;
 
 import javax.servlet.annotation.WebServlet;
 
+import com.vaadin.ui.Notification;
 import de.dinkov.vlsapp.samples.MainScreen;
 import de.dinkov.vlsapp.samples.authentication.AccessControl;
 import de.dinkov.vlsapp.samples.authentication.BasicAccessControl;
 import de.dinkov.vlsapp.samples.authentication.LoginScreen;
 import de.dinkov.vlsapp.samples.authentication.LoginScreen.LoginListener;
+import de.dinkov.vlsapp.samples.authentication.RegisterScreen;
+import de.dinkov.vlsapp.samples.authentication.RegisterScreen.SignUpListener;
 
 import com.vaadin.annotations.Theme;
 import com.vaadin.annotations.VaadinServletConfiguration;
@@ -17,7 +20,11 @@ import com.vaadin.server.VaadinRequest;
 import com.vaadin.server.VaadinServlet;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.themes.ValoTheme;
-
+import de.dinkov.vlsapp.samples.authentication.RegisterScreen;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.subject.Subject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 /**
  * Main UI class of the application that shows either the login screen or the
  * main view of the application depending on whether a user is signed in.
@@ -30,11 +37,12 @@ import com.vaadin.ui.themes.ValoTheme;
 @Theme("mytheme")
 @Widgetset("de.dinkov.vlsapp.VLSAppWidgetset")
 public class VlsAppUI extends UI {
-
+    private static final transient Logger log = LoggerFactory.getLogger(VlsAppUI.class);
     private AccessControl accessControl = new BasicAccessControl();
 
     @Override
     protected void init(VaadinRequest vaadinRequest) {
+        log.info("vls");
         Responsive.makeResponsive(this);
         setLocale(vaadinRequest.getLocale());
         getPage().setTitle("Visual Library Search");
@@ -47,6 +55,7 @@ public class VlsAppUI extends UI {
             }));
         } else {
             showMainView();
+
         }
     }
 
@@ -64,8 +73,9 @@ public class VlsAppUI extends UI {
         return accessControl;
     }
 
-    @WebServlet(urlPatterns = "/*", name = "MyUIServlet", asyncSupported = true)
+    @WebServlet(urlPatterns = "/*", name = "VlsAppUIServlet", asyncSupported = true)
     @VaadinServletConfiguration(ui = VlsAppUI.class, productionMode = false)
-    public static class MyUIServlet extends VaadinServlet {
+
+    public static class VlsAppUIServlet extends VaadinServlet {
     }
 }

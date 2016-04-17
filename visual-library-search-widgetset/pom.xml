@@ -35,6 +35,12 @@
             <artifactId>pagingcomponent</artifactId>
             <version>0.9.6</version>
         </dependency>
+        <!-- Diagram Paging Component -->
+        <dependency>
+            <groupId>org.vaadin.addon</groupId>
+            <artifactId>visjs-addon</artifactId>
+            <version>2.0.0.3</version>
+        </dependency>
     </dependencies>
 
     <build>

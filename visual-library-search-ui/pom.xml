@@ -51,6 +51,12 @@
             <artifactId>hibernate-validator</artifactId>
             <version>5.1.0.CR1</version>
         </dependency>
+        <!-- Apache Shiro   -->
+        <dependency>
+            <groupId>org.apache.shiro</groupId>
+            <artifactId>shiro-core</artifactId>
+            <version>1.2.4</version>
+        </dependency>
 
         <!-- Testing -->
         <dependency>
@@ -60,6 +66,41 @@
             <scope>test</scope>
         </dependency>
 
+        <dependency>
+            <groupId>org.apache.shiro</groupId>
+            <artifactId>shiro-core</artifactId>
+            <version>1.2.4</version>
+        </dependency>
+
+
+        <dependency>
+            <groupId>org.apache.shiro</groupId>
+            <artifactId>shiro-web</artifactId>
+            <version>1.2.4</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>1.7.19</version>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-log4j12</artifactId>
+            <version>1.7.19</version>
+        </dependency>
+
+
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>5.1.38</version>
+        </dependency>
+        <dependency>
+            <groupId>commons-logging</groupId>
+            <artifactId>commons-logging</artifactId>
+            <version>1.2</version>
+        </dependency>
         <dependency>
             <groupId>com.googlecode.json-simple</groupId>
             <artifactId>json-simple</artifactId>
@@ -109,7 +150,7 @@
                     <execution>
                         <goals>
                             <goal>update-theme</goal>
-                            <!-- disabled by default to use on-the-fly theme 
+                            <!-- disabled by default to use on-the-fly theme
                                 compilation -->
                             <!-- <goal>compile-theme</goal> -->
                         </goals>

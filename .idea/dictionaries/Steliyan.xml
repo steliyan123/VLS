@@ -2,6 +2,9 @@
   <dictionary name="Steliyan">
     <words>
       <w>searchview</w>
+      <w>shiro</w>
+      <w>uitest</w>
+      <w>vaadin</w>
     </words>
   </dictionary>
 </component>

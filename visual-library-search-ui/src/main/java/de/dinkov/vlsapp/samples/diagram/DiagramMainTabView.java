@@ -31,6 +31,7 @@ public class DiagramMainTabView extends VerticalLayout implements View, DiagramM
     public int BROWSER_HEIGHT_int = Page.getCurrent().getBrowserWindowHeight();
 
     public DiagramMainTabView() {
+
         setImmediate(true);
         setSizeFull();
 
@@ -87,6 +88,7 @@ public class DiagramMainTabView extends VerticalLayout implements View, DiagramM
                         addNewSessionTab(new SearchSession().getDefaultSearchSession());
                     }
                 } else if (c == DiagramView.class) {
+                    int index = tabsheet.getTabIndex();
                     String diagramViewSessionTabId = selectedTab.getId();
                     DiagramView diagramViewSaved = null;
                     if (searchSessionList.containsKey(diagramViewSessionTabId)) {

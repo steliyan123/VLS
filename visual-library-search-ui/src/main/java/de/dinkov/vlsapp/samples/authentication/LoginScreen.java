@@ -2,19 +2,11 @@ package de.dinkov.vlsapp.samples.authentication;
 
 import java.io.Serializable;
 
+import com.vaadin.data.Property;
 import com.vaadin.event.ShortcutAction;
 import com.vaadin.server.Page;
 import com.vaadin.shared.ui.label.ContentMode;
-import com.vaadin.ui.Alignment;
-import com.vaadin.ui.Button;
-import com.vaadin.ui.Component;
-import com.vaadin.ui.CssLayout;
-import com.vaadin.ui.FormLayout;
-import com.vaadin.ui.Label;
-import com.vaadin.ui.Notification;
-import com.vaadin.ui.PasswordField;
-import com.vaadin.ui.TextField;
-import com.vaadin.ui.VerticalLayout;
+import com.vaadin.ui.*;
 import com.vaadin.ui.themes.ValoTheme;
 
 /**
@@ -25,7 +17,8 @@ public class LoginScreen extends CssLayout {
     private TextField username;
     private PasswordField password;
     private Button login;
-    private Button forgotPassword;
+    private Button register;
+    private CheckBox rememberme;
     private LoginListener loginListener;
     private AccessControl accessControl;
 
@@ -69,7 +62,7 @@ public class LoginScreen extends CssLayout {
         username.setWidth(15, Unit.EM);
         loginForm.addComponent(password = new PasswordField("Password"));
         password.setWidth(15, Unit.EM);
-        password.setDescription("Write anything");
+        password.setDescription("Enter your password");
         CssLayout buttons = new CssLayout();
         buttons.setStyleName("buttons");
         loginForm.addComponent(buttons);
@@ -89,17 +82,33 @@ public class LoginScreen extends CssLayout {
         login.setClickShortcut(ShortcutAction.KeyCode.ENTER);
         login.addStyleName(ValoTheme.BUTTON_FRIENDLY);
 
-        buttons.addComponent(forgotPassword = new Button("Forgot password?"));
-        forgotPassword.addClickListener(new Button.ClickListener() {
+        buttons.addComponent(register = new Button("Register"));
+        register.addClickListener(new Button.ClickListener() {
             @Override
             public void buttonClick(Button.ClickEvent event) {
-                showNotification(new Notification("Hint: Try anything"));
+               getUI().getCurrent().setContent(new RegisterScreen(accessControl, new RegisterScreen.SignUpListener() {
+                @Override
+                public void signUpSuccessful() {
+                    Notification.show("You have successfully signed up!");
+                }
+            }));
             }
         });
-        forgotPassword.addStyleName(ValoTheme.BUTTON_LINK);
+        register.addStyleName(ValoTheme.BUTTON_LINK);
+
+        buttons.addComponent(rememberme = new CheckBox("Remember me!"));
+        rememberme.addStyleName(ValoTheme.CHECKBOX_SMALL);
+        rememberme.addValueChangeListener(new Property.ValueChangeListener(){
+            @Override
+            public void valueChange(Property.ValueChangeEvent event) {
+                Object value = event.getProperty().getValue();
+                boolean isCheck = (null == value) ? false : (Boolean) value;
+                Notification.show("isChecked:" + isCheck);
+            }
+        });
+
         return loginForm;
     }
-
     private CssLayout buildLoginInformation() {
         CssLayout loginInformation = new CssLayout();
         loginInformation.setStyleName("login-information");
@@ -112,7 +121,7 @@ public class LoginScreen extends CssLayout {
     }
 
     private void login() {
-        if (accessControl.signIn(username.getValue(), password.getValue())) {
+        if (accessControl.signIn(username.getValue(), password.getValue(),rememberme.getValue())) {
             loginListener.loginSuccessful();
         } else {
             showNotification(new Notification("Login failed",
@@ -130,6 +139,6 @@ public class LoginScreen extends CssLayout {
     }
 
     public interface LoginListener extends Serializable {
-        void loginSuccessful();
+         void loginSuccessful();
     }
 }
