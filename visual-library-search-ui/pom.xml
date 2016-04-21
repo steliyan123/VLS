@@ -51,12 +51,6 @@
             <artifactId>hibernate-validator</artifactId>
             <version>5.1.0.CR1</version>
         </dependency>
-        <!-- Apache Shiro   -->
-        <dependency>
-            <groupId>org.apache.shiro</groupId>
-            <artifactId>shiro-core</artifactId>
-            <version>1.2.4</version>
-        </dependency>
 
         <!-- Testing -->
         <dependency>
@@ -106,7 +100,11 @@
             <artifactId>json-simple</artifactId>
             <version>1.1.1</version>
         </dependency>
-
+        <dependency>
+            <groupId>eu.maxschuster</groupId>
+            <artifactId>vaadin-autocompletetextfield</artifactId>
+            <version>1.0-alpha-4</version>
+        </dependency>
     </dependencies>
 
     <build>

@@ -22,6 +22,7 @@ import com.vaadin.ui.MenuBar;
 import com.vaadin.ui.MenuBar.Command;
 import com.vaadin.ui.MenuBar.MenuItem;
 import com.vaadin.ui.themes.ValoTheme;
+import org.apache.shiro.SecurityUtils;
 
 /**
  * Responsive navigation menu presenting a list of available views to the user.
@@ -63,7 +64,8 @@ public class Menu extends CssLayout {
 
             @Override
             public void menuSelected(MenuItem selectedItem) {
-                VaadinSession.getCurrent().getSession().invalidate();
+                SecurityUtils.getSubject().logout(); //log out
+               // VaadinSession.getCurrent().getSession().invalidate();
                 Page.getCurrent().reload();
             }
         });
