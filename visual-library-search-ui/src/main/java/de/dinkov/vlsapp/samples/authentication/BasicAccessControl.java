@@ -37,35 +37,12 @@ public class BasicAccessControl implements AccessControl {
     @Override
     public boolean signUp(String username, String password) {
         boolean isAuthenticated = false;
-          /*  Connection conn;
-        String userName = "";
-
-        try {
-            readProperties();
-            Class.forName(prop.getProperty("JDBC_DRIVER"));
-            conn = DriverManager.getConnection(prop.getProperty("DB_URL"), prop.getProperty("USER"), prop.getProperty("PASS"));
-            String sql = "SELECT user_name FROM users WHERE user_name = ? AND user_pass = ?";
-            PreparedStatement statement = conn.prepareStatement(sql);
-            statement.setString(1, username);
-            statement.setString(2, password);
-            ResultSet rs = statement.executeQuery();
-            if (rs.next()){
-                userName  = rs.getString("user_name");
-            }
-        } catch (SQLException | ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-*/
-         String hashedPassword = generateHash(password);
-
-        //init
+        String hashedPassword = generateHash(password);
         Connection conn = null;
-
         try{
             readProperties();
             Class.forName(prop.getProperty("JDBC_DRIVER"));
             conn = DriverManager.getConnection(prop.getProperty("DB_URL"), prop.getProperty("USER"), prop.getProperty("PASS"));
-
             String sql = "INSERT INTO users ("
                     + " user_name,"
                     + " user_pass"
@@ -75,7 +52,6 @@ public class BasicAccessControl implements AccessControl {
             statement.setString(1, username);
             statement.setString(2, hashedPassword);
             statement.executeUpdate();
-
             isAuthenticated = true;
         }catch(SQLException se){
             //Handle errors for JDBC
@@ -84,30 +60,25 @@ public class BasicAccessControl implements AccessControl {
             //Handle errors for Class.forName
             e.printStackTrace();
         }finally{
-
             try{
                 if(conn!=null)
                     conn.close();
                 System.out.print("Connection Closed!");
             }catch(SQLException se){
                 se.printStackTrace();
-            }//end finally try
-        }//end try
-      //  System.out.println("Goodbye!");
-
+            }
+        }
         return isAuthenticated;
     }
 
     @Override
     public boolean signIn(String username, String password, Boolean rememberme) {
-
         Boolean isSigned = false;
         if (!(username == null || username.isEmpty()))
         {
             Subject currentUser = SecurityUtils.getSubject();
             UsernamePasswordToken token = new UsernamePasswordToken(username, password);
-            //  token.setRememberMe(rememberme);
-
+            token.setRememberMe(rememberme);
             try {
                 currentUser.login(token); //tries to authenticate user
                 CurrentUser.set(username);
@@ -115,9 +86,7 @@ public class BasicAccessControl implements AccessControl {
             } catch (Exception ex) { //if authentication is unsuccessful
                // Notification.show("Login Error:", "Invalid username/password combination.", Notification.Type.ERROR_MESSAGE);
             }
-
         }
-
         return isSigned;
     }
 
@@ -132,7 +101,10 @@ public class BasicAccessControl implements AccessControl {
             // Only the "admin" user is in the "admin" role
             return getPrincipalName().equals("admin");
         }
-
+        if ("customer".equals(role)) {
+            // Only the "admin" user is in the "admin" role
+            return getPrincipalName().equals("customer");
+        }
         // All users are in all non-admin roles
         return true;
     }
@@ -161,5 +133,4 @@ public class BasicAccessControl implements AccessControl {
 
         return hash.toString();
     }
-
 }

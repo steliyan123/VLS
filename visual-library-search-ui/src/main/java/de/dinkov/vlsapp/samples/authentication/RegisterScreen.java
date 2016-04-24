@@ -74,12 +74,33 @@ public class RegisterScreen extends CssLayout {
         register.addClickListener(new Button.ClickListener() {
             @Override
             public void buttonClick(Button.ClickEvent event) {
-                try {
-                    signUp();
-                } finally {
+                if (!username.isEmpty()){
+                    if (!password.isEmpty() && !retypePassword.isEmpty()){
+                        if (password.getValue() == retypePassword.getValue()){
+                            try {
+                                signUp();
+                            } finally {
+                                register.setEnabled(true);
+                            }
+                        }else {
+                            Notification.show("Passwords do not match! Please try again.");
+                            password.clear();
+                            retypePassword.clear();
+                            password.focus();
+                            register.setEnabled(true);
+                        }
+                    }else {
+                        Notification.show("Passwords cannot be empty fields! Please try again!");
+                        password.focus();
+                        register.setEnabled(true);
+                    }
+                }else{
+                    Notification.show("User name cannot be empty! Please try again!");
+                    username.focus();
                     register.setEnabled(true);
                 }
             }
+
         });
         register.setClickShortcut(ShortcutAction.KeyCode.ENTER);
         register.addStyleName(ValoTheme.BUTTON_FRIENDLY);
@@ -91,6 +112,7 @@ public class RegisterScreen extends CssLayout {
                 username.clear();
                 password.clear();
                 retypePassword.clear();
+                //UI.getCurrent().getNavigator().navigateTo("");
             }
         });
 
