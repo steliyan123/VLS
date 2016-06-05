@@ -76,12 +76,8 @@ public class RegisterScreen extends CssLayout {
             public void buttonClick(Button.ClickEvent event) {
                 if (!username.isEmpty()){
                     if (!password.isEmpty() && !retypePassword.isEmpty()){
-                        if (password.getValue() == retypePassword.getValue()){
-                            try {
+                        if (password.getValue().equals(retypePassword.getValue())){
                                 signUp();
-                            } finally {
-                                register.setEnabled(true);
-                            }
                         }else {
                             Notification.show("Passwords do not match! Please try again.");
                             password.clear();

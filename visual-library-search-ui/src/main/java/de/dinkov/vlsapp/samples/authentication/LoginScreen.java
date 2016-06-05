@@ -60,6 +60,8 @@ public class LoginScreen extends CssLayout {
 
         loginForm.addComponent(username = new TextField("Username", "admin"));
         username.setWidth(15, Unit.EM);
+        loginForm.addComponent(rememberme = new CheckBox("Remember me!"));
+        rememberme.addStyleName(ValoTheme.CHECKBOX_SMALL);
         loginForm.addComponent(password = new PasswordField("Password"));
         password.setWidth(15, Unit.EM);
         password.setDescription("Enter your password");
@@ -96,8 +98,7 @@ public class LoginScreen extends CssLayout {
         });
         register.addStyleName(ValoTheme.BUTTON_LINK);
 
-        buttons.addComponent(rememberme = new CheckBox("Remember me!"));
-        rememberme.addStyleName(ValoTheme.CHECKBOX_SMALL);
+
         rememberme.addValueChangeListener(new Property.ValueChangeListener(){
             @Override
             public void valueChange(Property.ValueChangeEvent event) {

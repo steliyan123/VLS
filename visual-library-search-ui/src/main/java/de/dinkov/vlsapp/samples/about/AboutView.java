@@ -8,20 +8,29 @@ import com.vaadin.shared.Position;
 import com.vaadin.shared.Version;
 import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.*;
+import de.dinkov.vlsapp.samples.backend.ElasticSearchSuggestionProvider;
 import eu.maxschuster.vaadin.autocompletetextfield.AutocompleteSuggestionProvider;
 import eu.maxschuster.vaadin.autocompletetextfield.AutocompleteTextField;
 import eu.maxschuster.vaadin.autocompletetextfield.provider.CollectionSuggestionProvider;
 import eu.maxschuster.vaadin.autocompletetextfield.provider.MatchMode;
 import eu.maxschuster.vaadin.autocompletetextfield.shared.ScrollBehavior;
+import org.elasticsearch.ElasticsearchException;
+import org.elasticsearch.action.search.SearchResponse;
+import org.elasticsearch.action.search.SearchType;
+import org.elasticsearch.client.Client;
+import org.elasticsearch.index.query.MatchQueryBuilder;
+import org.elasticsearch.index.query.MultiMatchQueryBuilder;
+import org.elasticsearch.index.query.QueryBuilders;
+import org.elasticsearch.node.Node;
+import org.elasticsearch.search.SearchHit;
 
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Locale;
+import java.util.*;
+
+import static org.elasticsearch.node.NodeBuilder.nodeBuilder;
 
 public class AboutView extends VerticalLayout implements View {
 
     public static final String VIEW_NAME = "About";
-
     public AboutView() {
         CustomLayout aboutContent = new CustomLayout("aboutview");
         aboutContent.setStyleName("about-content");
@@ -37,54 +46,41 @@ public class AboutView extends VerticalLayout implements View {
         setStyleName("about-view");
 
 
-        // ===============================
-        // Testing Autocomplete Field
-        // ===============================
+        AutocompleteSuggestionProvider suggestionProvider = new ElasticSearchSuggestionProvider(nodeBuilder());
 
-        Collection<String> theJavas = Arrays.asList(new String[] {
-                "Java",
-                "JavaScript",
-                "Join Java",
-                "JavaFX Script",
-                "JavaFX is hard",
-                "Something Java",
-                "Another thing Java"
-        });
+        AutocompleteTextField searchInputField = new AutocompleteTextField();
 
-        AutocompleteSuggestionProvider suggestionProvider = new CollectionSuggestionProvider(theJavas, MatchMode.CONTAINS, true, Locale.US);
+        searchInputField.setCache(true); // Client side should cache suggestions
+        searchInputField.setDelay(150); // Delay before sending a query to the server
+        searchInputField.setItemAsHtml(false); // Suggestions contain html formating. If true, make sure that the html is save to use!
+        searchInputField.setMinChars(2); // The required value length to trigger a query
+        searchInputField.setScrollBehavior(ScrollBehavior.NONE); // The method that should be used to compensate scrolling of the page
+        searchInputField.setSuggestionLimit(0); // The max amount of suggestions send to the client. If the limit is >= 0 no limit is applied
 
-        AutocompleteTextField field = new AutocompleteTextField();
+        searchInputField.addTextChangeListener(e -> {
+            // Use this method only if you have to react to text changes
+            // somewhere else immediately. You can always get the current value
+            // of the textfield by calling field.getValue()
 
-
-        field.setCache(false); // Client side should cache suggestions
-        field.setDelay(50); // Delay before sending a query to the server
-        field.setItemAsHtml(false); // Suggestions contain html formating. If true, make sure that the html is save to use!
-        field.setMinChars(1); // The required value length to trigger a query
-        field.setScrollBehavior(ScrollBehavior.NONE); // The method that should be used to compensate scrolling of the page
-        field.setSuggestionLimit(0); // The max amount of suggestions send to the client. If the limit is >= 0 no limit is applied
-
-        field.setSuggestionProvider(suggestionProvider);
-        field.addTextChangeListener(e -> {
             String text = "Text changed to: " + e.getText();
             Notification.show(text, Notification.Type.TRAY_NOTIFICATION);
+
         });
-        field.addValueChangeListener(e -> {
+        searchInputField.addValueChangeListener(e -> {
             String text = "Value changed to: " + e.getProperty().getValue();
             Notification notification = new Notification(
                     text, Notification.Type.TRAY_NOTIFICATION);
             notification.setPosition(Position.BOTTOM_LEFT);
             notification.show(Page.getCurrent());
         });
+        searchInputField.setSuggestionProvider(suggestionProvider);
+        searchInputField.setWidth(500,Unit.PIXELS);
+        addComponent(searchInputField);
+        setComponentAlignment(searchInputField, Alignment.MIDDLE_CENTER);
 
-        addComponent(field);
-        setComponentAlignment(field, Alignment.MIDDLE_CENTER);
-        // ===============================
-        // Testing Autocomplete Field ENDS
-        // ===============================
         addComponent(aboutContent);
         setComponentAlignment(aboutContent, Alignment.MIDDLE_CENTER);
-
-}
+    }
 
     @Override
     public void enter(ViewChangeEvent event) {
